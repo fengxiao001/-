@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.st.dao.UserDao">
+	<!--addUser 新增insert -->
+	<insert id="addUser" parameterType="com.st.bean.UserLogin">
+		<!--书写sql语句 -->
+		insert into t_user(facename,sex,userage,lasttime)
+		values
+		(#{facename},#{sex},#{userage},NOW());
+	</insert>
+	<delete id="deleteUser" parameterType="com.st.bean.UserLogin">
+		delete from t_user where
+		faceid=#{faceid}
+	</delete>
+	<update id="updateUser" parameterType="java.util.Map">
+		update t_user set
+		facename=#{facename},sex=#{sex},userage=#{userage}
+		where
+		faceid=#{faceid}
+	</update>
+	<select id="selectAllUser" resultType="java.util.HashMap">
+		select*from t_user
+	</select>
+	<select id="checkUser" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from t_user where facename like '%${checktext}%'
+	</select>
+	<!--#{}预编译的形式解析 ${}文本插入类似于字符串拼接 -->
+	<select id="getUser" parameterType="java.util.Map"
+		resultType="com.st.bean.UserLogin">
+		select * from t_user where facename like '%${checktext}%'
+		or sex like '%${checktext}%'
+		or userage like '%${checktext}%'
+		limit
+		${start},${limit}
+	</select>
+	<select id="getCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from t_user where facename like
+		'%${checktext}%'
+		or sex like '%${checktext}%'
+		or userage like
+		'%${checktext}%'
+	</select>
+	<update id="jiefeng" parameterType="java.util.Map">
+		update t_user set state='1'
+		where faceid=#{faceid}
+	</update>
+
+	<update id="fenghao" parameterType="java.util.Map">
+		update t_user set state='0'
+		where faceid=#{faceid}
+	</update>
+	
+</mapper>

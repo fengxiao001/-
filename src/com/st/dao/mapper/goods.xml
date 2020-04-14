@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.st.dao.IGoodsDao">
+	<!--新增 -->
+	<insert id="addGoods" parameterType="com.st.bean.Goods">
+		<!-- 书写sql语句 -->
+		insert into goods (classname)
+		values (#{classname})
+	</insert>
+	<!--书写查询sql -->
+	<select id="checkGoods" parameterType="java.util.Map"
+		resultType="com.st.bean.Goods">
+		select * from goods where classname like '%${checktext}%'
+		limit ${start},${limit}
+	</select>
+	<!--书写删除sql -->
+	<delete id="deleteGoods" parameterType="com.st.bean.Goods">
+		delete from goods where
+		goodsid=#{goodsid}
+	</delete>
+	<!--书写修改sql -->
+	<update id="updataGoods" parameterType="java.util.Map">
+		update goods set
+		classname=#{classname}
+		where goodsid=#{goodsid}
+	</update>
+
+	<select id="getcount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from goods where classname like '%${checktext}%'
+	</select>
+
+	<!--商品上架 -->
+	<update id="shangjia" parameterType="java.util.Map">
+		update goods set state=1 where goodsid=#{goodsid}
+	</update>
+	<!--商品下架 -->
+	<update id="xiajia" parameterType="java.util.Map">
+		update goods set state=0 where goodsid=#{goodsid}
+	</update>
+	
+	<select id="findAll" resultType="com.st.bean.Goods">
+		select * from goods
+	</select>
+</mapper>

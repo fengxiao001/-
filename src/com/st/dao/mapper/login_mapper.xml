@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.st.dao.LoginDao">
+	<select id="getuser" parameterType="java.util.Map"
+		resultType="com.st.bean.User">
+		select * from mes where username=#{username}
+	</select>
+<!--修改密码  -->
+	<update id="updatepassword" parameterType="java.util.Map">
+		update mes set password=#{new_password} where userid=#{userid}
+	</update>
+	<select id="getfaceuser" parameterType="java.util.Map"
+		resultType="com.st.bean.UserLogin">
+		select * from t_user where facename=#{facename} and state=#{state}
+	</select>
+	
+	<insert id="reg" parameterType="java.util.Map">
+	insert into t_user (facename,password,tel) 
+	values(#{facename},#{password},#{tel})
+	</insert>
+	
+<select id="checkname" resultType="java.util.Map"  parameterType="java.util.Map"  >
+       SELECT * FROM  product where state=#{state}
+</select>
+<select id="checkclas" resultType="java.util.Map">
+select * from goods
+</select>
+
+<select id="checkpro"  parameterType="java.util.Map"  resultType="java.util.Map" >
+select * from product  where proid like '%${param}%'
+</select>
+
+<select id="checkgou" parameterType="java.util.Map"  resultType="java.util.Map">
+select * from product  where proid like '%${params}%'
+</select>
+
+<!--购物车查询  -->
+<select id="checkcar" resultType="java.util.Map" parameterType="java.util.Map">
+select * from shoppingcat where faceid like '%${faceid}%'
+</select>
+<!--删除购物车信息  -->
+<delete id="deletegou" parameterType="Integer">
+delete from shoppingcat where
+shoppingid=#{shoppingid}
+
+</delete>
+<insert id="addorder" parameterType="java.util.Map">
+insert into dingdan(user_id,proid,procount,proprice,imgname,proname,dddz,xdtime)
+values(#{user_id},#{proid},#{procount},#{proprice},#{imgname},#{proname},#{dddz},now());
+</insert>
+
+
+<select id="getDizhi" parameterType="java.util.Map" resultType="java.util.Map">
+select *from dz where user_id=#{user_id}
+</select>
+
+<select id="selectUserorder" parameterType="java.util.Map" resultType="java.util.Map">
+select * from dingdan where user_id=#{user_id}
+</select>
+
+</mapper>

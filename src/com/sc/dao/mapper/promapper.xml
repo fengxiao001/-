@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.sc.dao.IProd">
+
+<select id="checkname" resultType="java.util.Map">
+SELECT * FROM  product 
+</select>
+<select id="checkclas" resultType="java.util.Map">
+select * from goods
+</select>
+
+<select id="checkphone" parameterType="java.util.Map"  resultType="java.util.Map">
+select * from product where proname like '%${proname}%' and state=#{state}
+ limit  ${start},  ${end}
+</select>
+<select id="checkcount" parameterType="java.util.Map"  resultType="String">
+select count(*) from product where proname like '%${proname}%' 
+</select>
+
+<insert id="insertgouwu" parameterType="java.util.Map">
+insert into shoppingcat(proid,proprice,faceid,imgname,proname)
+values(#{proid},#{proprice},#{faceid},#{imgname},#{proname});
+</insert>
+
+<select id="jian" parameterType="java.util.Map">
+update shoppingcat set count= count-1 where faceid=#{faceid} and shoppingid=#{shoppingid}
+</select>
+
+<select id="jia" parameterType="java.util.Map">
+update shoppingcat set count=count+1 where faceid=#{faceid} and shoppingid=#{shoppingid}
+</select>
+<insert id="addDizhi" parameterType="java.util.Map" >
+insert into dz(user_id,dname,dtel,ddz)
+values(#{user_id},#{dname},#{dtel},#{ddz})
+</insert>
+
+</mapper>

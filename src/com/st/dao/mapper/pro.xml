@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.st.dao.IPro_Dao">
+	<!--查询 -->
+	<select id="checkpro" parameterType="java.util.Map"
+		resultType="com.st.bean.Pro">
+	select product.proid,goods.classname,product.proname,product.proprice,product.prostock,product.imgname,product.state FROM product LEFT JOIN goods ON product.classid=goods.goodsid 
+        where proname like '%${checktext}%'
+		or proprice like '%${checktext}%'
+		or classid like '%${checktext}%'
+		or prostock like '%${checktext}%' limit
+		${start},${limit}
+	</select>
+	
+	<!--新增 -->
+	<!-- <insert id="insertpro" parameterType="java.util.Map">
+		insert into product
+		(proname,proprice,proclass,prostock)
+		values(#{proname},#{proprice},#{proclass},#{prostock})
+	</insert> -->
+	<!--删除 -->
+	<delete id="dlepro" parameterType="java.util.Map">
+		delete from product where
+		proid=#{proid}
+	</delete>
+	<!--修改 -->
+	<update id="update" parameterType="java.util.Map">
+		update product set
+		proname=#{proname},proprice=#{proprice},classid=#{classid},prostock=#{prostock}
+		where proid=#{proid}
+	</update>
+	<!--上架 -->
+	<update id="shangjia1" parameterType="java.util.Map">
+		update product set state=1
+		where proid=#{proid}
+	</update>
+	
+	
+	<!-- 下架 -->
+	<update id="xiajia1" parameterType="java.util.Map">
+		update product set state=0
+		where proid=#{proid}
+	</update>
+	
+	
+	<select id="getcount1" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from product where  proname like '%${checktext}%'
+		or proprice like '%${checktext}%'
+		or classid like '%${checktext}%'
+		or prostock like '%${checktext}%'
+	</select>
+	
+	<insert id='creatPro' parameterType="java.util.Map">
+	insert into product
+		(proname,proprice,classid,prostock,imgname,state)
+		values(#{proname},#{proprice},#{classid},#{prostock},#{imgname},#{state});
+	</insert>
+	
+<!-- 	<insert id="saveimg" parameterType="java.util.Map">
+	insert into img (imgname) values(#{imgname}) ;
+	</insert> -->
+	
+</mapper>

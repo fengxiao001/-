@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+	<mvc:annotation-driven>
+		<mvc:message-converters
+			register-defaults="true">
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="defaultCharset" value="UTF-8" />
+				<property name="writeAcceptCharset" value="false" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!--告知springmvc启用服务器提供的默认的servlet -->
+	<mvc:default-servlet-handler />
+
+	<!-- spring扫描包结构 以及其子包 并将指定的类创建对象纳入spring管理 -->
+	<context:component-scan base-package="com"></context:component-scan>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传文件的最大大小，单位为字节 -->
+		<property name="maxUploadSize" value="#{1024*1024}"></property>
+
+	<!-- 	上传文件的编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!--配置数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value='${user}'></property>
+		<property name="password" value='${password}'></property>
+	</bean>
+
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!--配置MyBaties全局配置文件：mybatis-config.xml -->
+		<property name="configLocation" value="classpath:mybatis.xml" />
+		<!--扫描sql配置文件：mapper需要xml文件 -->
+		<property name="mapperLocations"
+			value="classpath:com/*/dao/mapper/*.xml" />
+	</bean>
+
+
+	<!--配置扫描Dao 接口包，动态实现dao接口，注入到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--注入sqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory"></property>
+		<!--给出需要扫描Dao接口包 -->
+		<property name="basePackage" value="com.*.dao"></property>
+	</bean>
+<!-- 配置拦截器 -->
+<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:mapping path="/*"/>
+		<bean class="com.sc.interceptor.Testinterceptot"></bean>
+	</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>

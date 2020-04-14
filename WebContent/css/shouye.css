@@ -1,0 +1,174 @@
+/*总体设置*/
+html,body{
+	width: 100%;
+	
+}
+#Customer,
+#footer {
+	width: 1226px;
+	margin: 0 auto;
+}
+
+.ending>html {
+	background: #F5F5F5;
+}
+
+.ending>body {
+	font: 14px "microsoft yahei", Arial, Helvetica, sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	
+}
+
+.ending>ul,
+li,
+p,
+h2,
+h4,
+dl,
+dt,
+dd {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+input {
+	outline: none;
+}
+
+/*清楚点击时的边框*/
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #FF6700;
+	text-decoration: none;
+}
+
+.rt {
+	float: right;
+}
+
+.lt {
+	float: left;
+}
+
+
+/*-------------------------*/
+#Customer>ul li {
+	float: left;
+	padding-left: 45px;
+	height: 56px;
+	line-height: 56px;
+	font-size: 19px;
+}
+
+#Customer>ul>span {
+	font-size: 15px;
+	float: left;
+	padding-left: 66px;
+	color: #B0B0B0;
+}
+
+#Customer>ul {
+	height: 56px;
+	line-height: 56px;
+	float: left;
+	width: 1226px;
+}
+
+#hps ul {
+	float: left;
+	height: 134px;
+}
+
+#hps ul.help>li {
+	float: left;
+	margin-left: 60px;
+	padding-right: 30px;
+}
+
+#hps ul li a {
+	display: block;
+	margin: 10px 0 0;
+	font-size: 12px;
+}
+
+#hps>div {
+	width: 165px;
+	height: 134px;
+	border-left: 1px solid #e0e0e0;
+	text-align: center;
+	color: #616161;
+	margin: 6px 16px;
+}
+
+#hps>div>div {
+	margin: 0 0 5px;
+	font-size: 22px;
+	color: #ff6700;
+}
+
+#hps>div>p {
+	margin: 0 0 16px;
+	font-size: 12px;
+}
+
+
+#hps {
+	height: 200px;
+}
+
+
+
+/*------------*/
+#ft {
+	background: #FAFAFA;
+	width: 99%;
+	border: 1px solid #FAFAFA;
+	clear: both;
+}
+
+#footer {
+	border: 1px solid #FAFAFA;
+	clear: both;
+	height: 56px;
+	margin: 20px auto;
+}
+
+#footer:before {
+	content: "";
+	overflow: hidden;
+	clear: both;
+}
+
+#footer>p {
+	width: 57px;
+	height: 57px;
+	
+}
+
+#footer div.lt {
+	font-size: 12px;
+}
+
+#footer div.lt>p {
+	margin: 4px 0px;
+}
+
+#footer div.rt {
+	margin-top: 16px;
+}
+
+div.btm {
+	width: 1226px;
+	clear: both;
+	margin: 20px auto;
+	height: 20px;
+	
+}
